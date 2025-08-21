@@ -24,7 +24,7 @@ Incluye gestión de fotos de perfil, validaciones y una tabla interactiva con **
 ## Base de datos
 
 ### 1. **Base de datos**
-* Importa `sql/init.sql` en tu servidor MySQL.
+* Importa `sql/database.sql` en tu servidor MySQL.
 * Esto creará la tabla `students`.
 
 ### 2. **Configurar conexión**
