@@ -25,30 +25,33 @@ if (!empty($_GET["id"])) {
     <title>Actualizar</title>
 </head>
 <body>
-    <form class="col-4 p-3 m-auto" method="POST" enctype="multipart/form-data">
-      <h4 class="text-center text-secondary ">Actualizar Informacion del Estudiante</h4>
-      <input type="text" class="form-control" name="id" value="<?= $_GET['id'] ?>" hidden>
-        <div class="mb-3">
+    <form action="modificarController.php" method="POST" enctype="multipart/form-data" class="col-4 p-3 m-auto">
+        <h4 class="text-center text-secondary ">Actualizar Informacion del Estudiante</h4>
+      
+        <input type="hidden" class="form-control" name="id" value="<?= $_GET['id'] ?>">
+        <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Nombre Completo</label>
             <input type="text" class="form-control" name="nombre" value="<?= $estudiante['nombre'] ?>">
         </div>
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">identificacion</label>
             <input type="text" class="form-control" name="identificacion" value="<?= $estudiante['identificacion'] ?>">
         </div>
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">Telefono</label>
             <input type="text" class="form-control" name="telefono" value="<?= $estudiante['telefono'] ?>">
         </div>
-        <div class="mb-3">
+        
+        <div class="mb-1">
             <label for="exampleInputEmail1" class="form-label">email</label>
             <input type="email" class="form-control" name="email" value="<?= $estudiante['email'] ?>">
         </div>
-        
-        <div class="mb-3">
+
+        <div class="mb-1">
         <label class="form-label">Foto</label><br>
         <img src="../assets/img/estudiantes/<?= $estudiante['foto'] ?>" 
              alt="Foto actual" width="100" class="mb-2"><br>
+        
         <input type="file" class="form-control" name="foto">
       </div>
         <!-- Para saber a quién actualizar -->

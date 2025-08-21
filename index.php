@@ -16,6 +16,7 @@
       <?php
       include "db/connection.php";
       include "controllers/registroController.php";
+      include "controllers/eliminarController.php";
       ?>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Nombre Completo</label>
@@ -42,6 +43,12 @@
 
     <div class="col-8">
       <h3 class="text-center text-secondary">Lista de Estudiantes</h3>
+      <?php if (isset($_GET['msg']) && $_GET['msg'] == 'updated'): ?>
+        <div class="alert alert-success">✅ Estudiante actualizado correctamente</div>
+    <?php endif; ?>
+    <?php if (isset($_GET['msg']) && $_GET['msg'] == 'deleted'): ?>
+        <div class="alert alert-success">✅ Estudiante eliminado correctamente</div>
+    <?php endif; ?>
         <table class="table table-striped mt-3">
           <thead class="bg-info">
             <tr>
@@ -53,20 +60,7 @@
               <th scope="col">Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>123456</td>
-              <td>555-1234</td>
-              <td>juan@example.com</td>
-              <td><img src="assets/img/estudiantes/juan.jpg" alt="Foto de Juan" class="img-fluid" width="100"></td>
-              <td>
-                <button class="btn btn-warning btn-sm">Editar</button>
-                <button class="btn btn-danger btn-sm">Eliminar</button>
-              </td>
-              
-            </tr>
-          </tbody>
+          
           <?php
           // Aquí se agregarán los estudiantes
           include "db/connection.php";
@@ -81,12 +75,12 @@
                   echo "<td>" . $fila["identificacion"] . "</td>";
                   echo "<td>" . $fila["telefono"] . "</td>";
                   echo "<td>" . $fila["email"] . "</td>";
-                  echo "<td><img src='assets/img/estudiantes/" . $fila["foto"] . "' alt='Foto de " . $fila["nombre"] . "' class='img-fluid' width='100'>Editar</td>";                
+                  echo "<td><img src='assets/img/estudiantes/" . $fila["foto"] . "' alt='Foto de " . $fila["nombre"] . "' class='img-fluid' width='100'></td>";                
                   echo "</ul>";
                   echo "</td>";
                   echo "<td>";
                   echo "<a href='controllers/modificar.php?id=" . $fila["id"] . "' class='btn btn-warning btn-sm me-1 '><i class='fa-solid fa-pen-to-square'></i>Editar</a>";
-                  echo "<a on-click=\"return controllers/eliminar.php?id=" . $fila["id"] . "\" class='btn btn-small btn-danger'><i class='fa-solid fa-trash'></i>Eliminar</a>";
+                  echo "<a href='index.php?id=" . $fila["id"] . "' class='btn btn-small btn-danger'><i class='fa-solid fa-trash'></i>Eliminar</a>";
                   echo "</td>";
                   echo "</tr>";
               }

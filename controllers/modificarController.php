@@ -9,28 +9,36 @@ if (!empty($_POST["btnmodificar"])) {
     $email = $_POST["email"];
     $foto = $_FILES["foto"];
 
-    // Validar y procesar la foto
-    if ($foto["error"] == 0) {
-        $nombreArchivo = $foto["name"];
-        $rutaTemporal = $foto["tmp_name"];
-        $rutaDestino = "../assets/img/estudiantes/" . $nombreArchivo;
-
-        // Mover la foto a la carpeta de estudiantes
-        move_uploaded_file($rutaTemporal, $rutaDestino);
-    } else {
-        // Si no se subió una nueva foto, mantener la foto actual
-        $sql = $conexion->query("SELECT foto FROM students WHERE id=$id");
-        $estudiante = $sql->fetch_assoc();
-        $rutaDestino = "../assets/img/estudiantes/" . $estudiante["foto"];
+    // Validar duplicados en email o identificacion (excepto el mismo estudiante)
+    $check = $conexion->query("SELECT * FROM students 
+                               WHERE (email='$email' OR identificacion='$identificacion') 
+                               AND id!=$id");
+    if ($check->num_rows > 0) {
+        echo "<div class='alert alert-danger'>⚠️ Ya existe un estudiante con ese correo o identificación.</div>";
+        exit;
     }
+    // Construir el SQL dependiendo de si subieron foto nueva o no
+    if ($foto["error"] == 0) {
+        $rutaTemporal = $foto["tmp_name"];
+        $rutaDestino = "../assets/img/estudiantes/" . $foto["name"];
+        move_uploaded_file($rutaTemporal, $rutaDestino);
 
-    // Actualizar los datos del estudiante en la base de datos
-    $sql = "UPDATE students SET nombre='$nombre', identificacion='$identificacion', telefono='$telefono', email='$email', foto='$nombreArchivo' WHERE id=$id";
+        $sql = "UPDATE students 
+                SET nombre='$nombre', identificacion='$identificacion', telefono='$telefono', email='$email', foto='$foto[name]' 
+                WHERE id=$id";
+
+    } else {
+        $sql = "UPDATE students 
+                SET nombre='$nombre', identificacion='$identificacion', telefono='$telefono', email='$email' 
+                WHERE id=$id";
+    }
+    // Ejecutar la consulta
     if ($conexion->query($sql) === TRUE) {
-        header("Location: ../index.php");
+        header("Location: ../index.php?msg=updated");
     } else {
         echo "<div class='alert alert-danger'>Error al modificar el estudiante: " . $conexion->error . "</div>";
     }
 } else {
-    echo "<div class='alert alert-danger'>⚠️ Debes completar todos los campos.</div>";
+    header("Location: ../index.php");
+    exit;
 }
