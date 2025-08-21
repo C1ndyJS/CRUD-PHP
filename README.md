@@ -62,7 +62,7 @@ tecnolab-crud-estudiantes/
 │   └── connection.php          # Conexión MySQL
 │
 │── index.php                   # UI principal
-│── sql/init.sql                # Script de BD
+│── sql/database.sql                # Script de BD
 │── README.md                   # Documentación
 ```
 
