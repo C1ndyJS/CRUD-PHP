@@ -39,7 +39,7 @@ $conexion = new mysqli("localhost", "usuario", "password", "tecnolab");
 * Accede a:
 
 ```
-http://localhost/tecnolab-crud-estudiantes/index.php
+http://localhost/CRUD-PHP/index.php
 ```
 
 ## 🛠️ Requisitos
