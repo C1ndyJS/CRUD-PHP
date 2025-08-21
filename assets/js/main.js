@@ -1,6 +1,9 @@
+let editMode = false; // false = registrar, true = editar
+let tabla; // hacemos global la referencia a DataTable
+
 //Read
 $(document).ready(function () {
-  let tabla = $('#tablaEstudiantes').DataTable({
+  tabla = $('#tablaEstudiantes').DataTable({
     ajax: "controllers/studentControllers.php?action=read",
     columns: [
       { data: "nombre" },
@@ -32,9 +35,9 @@ $(document).ready(function () {
 $('#formRegistro').on('submit', function (e) {
     e.preventDefault();
     let formData = new FormData(this);
-
+    let action = editMode ? "update" : "create";
     $.ajax({
-      url: 'controllers/studentControllers.php?action=create',
+      url: 'controllers/studentControllers.php?action=' + action,
       type: 'POST',
       data: formData,
       processData: false,
@@ -42,12 +45,22 @@ $('#formRegistro').on('submit', function (e) {
       success: function (resp) {
         $('#msg').html(`<div class="alert alert-success">${resp}</div>`);
         $('#formRegistro')[0].reset();
-        tabla.ajax.reload();
+        $('#tablaEstudiantes').DataTable().ajax.reload(null, false); // 👈 recarga sin perder paginación
+        
       },
       error: function () {
         $('#msg').html(`<div class="alert alert-danger">❌ Error al registrar</div>`);
       }
     });
+});
+
+$('#btnCancel').on('click', function () {
+  $('#formRegistro')[0].reset();   // limpiar form
+  $('#id').val('');
+  $('#formTitulo').text("Registrar Estudiante");
+  $('#btnSubmit').text("Registrar").removeClass("btn-success").addClass("btn-primary");
+  $(this).addClass("d-none"); // ocultar cancelar
+  editMode = false;
 });
 
 function eliminar(id) {
@@ -62,39 +75,16 @@ function eliminar(id) {
 
 // Editar estudiante (abrir modal)
 function editar(id) {
-  $.get("controllers/studentControllers.php?action=get&id=" + id, function (data) {
-      let est = JSON.parse(data);
+  $.getJSON("controllers/studentControllers.php?action=get&id=" + id, function (data) {
+    $('#id').val(data.id);
+    $('#nombre').val(data.nombre);
+    $('#identificacion').val(data.identificacion);
+    $('#telefono').val(data.telefono);
+    $('#email').val(data.email);
+    $('#formTitulo').text("Actualizar Estudiante");
+    $('#btnSubmit').text("Registrar").removeClass("btn-success").addClass("btn-primary");
+    $('#btnCancel').removeClass("d-none");
 
-      // Ejemplo simple: llenar el form de registro con datos del estudiante
-      $('#nombre').val(est.nombre);
-      $('#identificacion').val(est.identificacion);
-      $('#telefono').val(est.telefono);
-      $('#email').val(est.email);
-
-      // Guardar el id oculto
-      if (!$('#formRegistro input[name=id]').length) {
-        $('#formRegistro').append('<input type="hidden" name="id" id="id">');
-      }
-      $('#id').val(est.id);
-
-      // Cambiar acción del form
-      $('#formRegistro').off('submit').on('submit', function (e) {
-        e.preventDefault();
-        let formData = new FormData(this);
-        $.ajax({
-          url: 'controllers/studentControllers.php?action=update',
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (resp) {
-            $('#msg').html(`<div class="alert alert-success">${resp}</div>`);
-            $('#formRegistro')[0].reset();
-            $('#id').remove(); // quitar hidden
-            $('#tablaEstudiantes').DataTable().ajax.reload();
-          }
-        });
-      });
   });
 }
 

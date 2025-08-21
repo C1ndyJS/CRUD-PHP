@@ -15,7 +15,8 @@
     <h1 class="text-center p-3">Gestión de Estudiantes</h1>
 
       <form class="col-4 p-3" id="formRegistro" method="POST" enctype="multipart/form-data">
-        <h3 class="text-center text-secondary ">Registrar Estudiante</h3>
+        <h3 id="formTitulo" class="text-center text-secondary ">Registrar Estudiante</h3>
+          <input type="hidden" name="id" id="id">
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre Completo</label>
           <input type="text" id="nombre" class="form-control" name="nombre">
@@ -36,7 +37,9 @@
           <label for="foto" class="form-label">Foto</label>
           <input type="file" id="foto" class="form-control" name="foto">
         </div>
-        <button type="submit" class="btn btn-primary" name="btnregistrar" value="okay">Registrar</button>
+        <button type="submit" id="btnSubmit" class="btn btn-primary" name="btnregistrar" value="okay">Registrar</button>
+        <button type="button" id="btnCancel" class="btn btn-secondary d-none">Cancelar</button>
+
       </form>
       <div class="col-8">
         <h3 class="text-center text-secondary">Lista de Estudiantes</h3>

@@ -32,7 +32,7 @@ switch ($action) {
         if ($conexion->query($sql)) {
             echo "✅ Estudiante registrado correctamente.";
         } else {
-            echo "❌ Error al registrar: " . $conexion->error;
+            echo " Error al registrar: " . $conexion->error;
         }
         break;
     // LISTAR ESTUDIANTES (para DataTables)

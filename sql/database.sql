@@ -1,3 +1,9 @@
+-- Autora Cindy Marcela Jimenez Saldarriaga
+-- Base de datos: `tecnolab`
+-- Versión de PHP: 8.2.12
+-- Tiempo de generación: 21-08-2025 a las 21:55:09
+
+
 CREATE DATABASE tecnolab;
 USE tecnolab;
 
