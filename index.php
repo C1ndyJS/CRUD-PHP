@@ -15,7 +15,7 @@
       <h3 class="text-center text-secondary ">Registrar Estudiante</h3>
       <?php
       include "db/connection.php";
-      include "controllers/registro.php";
+      include "controllers/registroController.php";
       ?>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Nombre Completo</label>
@@ -75,19 +75,18 @@
           $resultado = $conexion->query($sql);
 
           if ($resultado->num_rows > 0) {
-              while ($fila = $resultado->fetch_assoc()) {
+              while ($fila = $resultado->fetch_assoc()) { 
                   echo "<tr>";
                   echo "<td>" . $fila["nombre"] . "</td>";
                   echo "<td>" . $fila["identificacion"] . "</td>";
                   echo "<td>" . $fila["telefono"] . "</td>";
                   echo "<td>" . $fila["email"] . "</td>";
-                  echo "<td><img src='assets/img/estudiantes/" . $fila["foto"] . "' alt='Foto de " . $fila["nombre"] . "' class='img-fluid' width='100'></td>";
-                  echo "<td>";                
+                  echo "<td><img src='assets/img/estudiantes/" . $fila["foto"] . "' alt='Foto de " . $fila["nombre"] . "' class='img-fluid' width='100'>Editar</td>";                
                   echo "</ul>";
                   echo "</td>";
                   echo "<td>";
-                  echo "<button class='btn btn-warning btn-sm'>Editar</button>";
-                  echo "<button class='btn btn-danger btn-sm'>Eliminar</button>";
+                  echo "<a href='controllers/modificar.php?id=" . $fila["id"] . "' class='btn btn-warning btn-sm me-1 '><i class='fa-solid fa-pen-to-square'></i>Editar</a>";
+                  echo "<a on-click=\"return controllers/eliminar.php?id=" . $fila["id"] . "\" class='btn btn-small btn-danger'><i class='fa-solid fa-trash'></i>Eliminar</a>";
                   echo "</td>";
                   echo "</tr>";
               }
