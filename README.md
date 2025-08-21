@@ -18,8 +18,7 @@ Incluye gestión de fotos de perfil, validaciones y una tabla interactiva con **
 
 1. **Clonar repositorio**
    ```bash
-   git clone https://github.com/tuusuario/tecnolab-crud-estudiantes.git
-   cd tecnolab-crud-estudiantes
+   git clone https://github.com/C1ndyJS/CRUD-PHP
 
 ## Base de datos
 
@@ -50,7 +49,7 @@ http://localhost/CRUD-PHP/index.php
 ## 📂 Estructura del proyecto
 
 ```
-tecnolab-crud-estudiantes/
+CRUD-PHP/
 │── assets/
 │   ├── img/estudiantes/   # Fotos de estudiantes
 │   └── js/main.js         # Lógica AJAX con jQuery
@@ -96,4 +95,4 @@ tecnolab-crud-estudiantes/
 5. Abre un Pull Request.
 
 ## ✨ Créditos
-Proyecto desarrollado por **Cindy ** 💻
+Proyecto desarrollado por **Cindy Marcela Jimenez Saldarriaga ** 💻
