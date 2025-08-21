@@ -13,51 +13,65 @@
 <body>
   <div class="container-fluid row">
     <h1 class="text-center p-3">Gestión de Estudiantes</h1>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card p-4">
+          <h3 id="formTitulo" class="text-center text-secondary mb-4">Registrar Estudiante</h3>          
 
-      <form class="col-4 p-3" id="formRegistro" method="POST" enctype="multipart/form-data">
-        <h3 id="formTitulo" class="text-center text-secondary ">Registrar Estudiante</h3>
-          <input type="hidden" name="id" id="id">
-        <div class="mb-3">
-          <label for="nombre" class="form-label">Nombre Completo</label>
-          <input type="text" id="nombre" class="form-control" name="nombre">
+          <form id="formRegistro" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" id="id">
+            
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre Completo</label>
+              <input type="text" id="nombre" class="form-control" name="nombre">
+            </div>
+            
+            <div class="mb-3">
+              <label for="identificacion" class="form-label">identificacion</label>
+              <input type="text" id="identificacion" class="form-control" name="identificacion" >
+            </div>
+            
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Telefono</label>
+              <input type="text" id="telefono" class="form-control" name="telefono">
+            </div>
+            
+            <div class="mb-3">
+              <label for="email" class="form-label">email</label>
+              <input type="email" id="email" class="form-control" name="email">
+            </div>
+            
+            <div class="mb-3">
+              <label for="foto" class="form-label">Foto</label>
+              <input type="file" id="foto" class="form-control" name="foto">
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+              <button type="submit" id="btnSubmit" class="btn btn-primary me-2" name="btnregistrar" value="okay">Registrar</button>
+              <button type="button" id="btnCancel" class="btn btn-secondary d-none">Cancelar</button>
+            </div>
+          </form>
         </div>
-        <div class="mb-3">
-          <label for="identificacion" class="form-label">identificacion</label>
-          <input type="text" id="identificacion" class="form-control" name="identificacion" >
-        </div>
-        <div class="mb-3">
-          <label for="telefono" class="form-label">Telefono</label>
-          <input type="text" id="telefono" class="form-control" name="telefono">
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">email</label>
-          <input type="email" id="email" class="form-control" name="email">
-        </div>
-        <div class="mb-3">
-          <label for="foto" class="form-label">Foto</label>
-          <input type="file" id="foto" class="form-control" name="foto">
-        </div>
-        <button type="submit" id="btnSubmit" class="btn btn-primary" name="btnregistrar" value="okay">Registrar</button>
-        <button type="button" id="btnCancel" class="btn btn-secondary d-none">Cancelar</button>
-
-      </form>
-      <div class="col-8">
-        <h3 class="text-center text-secondary">Lista de Estudiantes</h3>
-        <div id="msg"></div>
-        <table id="tablaEstudiantes" class="table table-striped mt-3">
-            <thead class="bg-info">
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">identificacion</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">email</th>
-                <th scope="col">Foto</th>
-                <th scope="col">Acciones</th>
-              </tr>
-            </thead>
-        </table>
       </div>
-  <div>
+          <div class="col-lg-8">
+            <div class="card p-4">
+              <h3 class="text-center text-secondary mb-3">Lista de Estudiantes</h3>
+              <div id="msg"></div>
+              <table id="tablaEstudiantes" class="table table-striped table-hover align-middle">
+                  <thead class="table-primary">
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">identificacion</th>
+                      <th scope="col">Teléfono</th>
+                      <th scope="col">email</th>
+                      <th scope="col">Foto</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+              </table>
+            </div>
+          </div>
+    </div>
+  </div>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
