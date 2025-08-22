@@ -34,8 +34,42 @@ $(document).ready(function () {
 //Create
 $('#formRegistro').on('submit', function (e) {
     e.preventDefault();
+    let nombre = $('#nombre').val().trim();
+    let identificacion = $('#identificacion').val().trim();
+    let email = $('#email').val().trim();
+    let telefono = $('#telefono').val().trim();
+    
+    // Validaciones
+    if (!nombre || !identificacion || !email || !telefono) {
+      $('#msg').html(`<div class="alert alert-danger">Los siguientes campos son obligatorios: Nombre Completo, Identificacion, email y telefono</div>`);
+      return;
+    }
+
+    if (!/^[a-zA-Z\s]+$/.test(nombre)) {
+      $('#msg').html(`<div class="alert alert-danger">El nombre solo debe contener letras
+      </div>`);
+      return;
+    }
+
+    if (!/^\d{6,10}$/.test(identificacion)) {
+      $('#msg').html(`<div class="alert alert-danger">La identificación debe tener entre 6 y 10 dígitos</div>`);
+      return;
+    }
+
+    if( !/^\d{7,10}$/.test(telefono)) {
+      $('#msg').html(`<div class="alert alert-danger">El teléfono debe tener entre 7 y 10 dígitos</div>`);
+        return;
+    }
+    
+    let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regexEmail.test(email)) {
+        $('#msg').html(`<div class="alert alert-danger">⚠️ El correo electrónico no es válido.</div>`);
+        return;
+    }
+
     let formData = new FormData(this);
     let action = editMode ? "update" : "create";
+    
     $.ajax({
       url: 'controllers/studentControllers.php?action=' + action,
       type: 'POST',

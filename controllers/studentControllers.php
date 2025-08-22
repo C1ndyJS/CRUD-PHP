@@ -14,10 +14,37 @@ switch ($action) {
         // Validar duplicados
         $check = $conexion->query("SELECT * FROM students WHERE email='$email' OR identificacion='$identificacion'");
         if ($check->num_rows > 0) {
-            echo "⚠️ Ya existe un estudiante con ese correo o identificación.";
+            echo "Ya existe un estudiante con ese correo o identificación.";
+            exit;
+        }
+        // Validación obligatorios
+        if (empty($nombre) || empty($identificacion) || empty($email)) {
+            echo "Error: Nombre, identificación y email son obligatorios.";
             exit;
         }
 
+        // Validación email básico
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo "Error: El correo no es válido.";
+            exit;
+        }
+
+        // Validación teléfono
+        if (!preg_match('/^[0-9]{7,10}$/', $telefono)) {
+            echo "Error: El teléfono debe tener entre 7 y 10 dígitos.";
+            exit;
+        }
+        // Validación identificación
+        if (!preg_match('/^[0-9]{8,10}$/', $identificacion)) {
+            echo "Error: La identificación debe tener entre 8 y 10 dígitos.";
+            exit;
+        }
+        // Validación nombre
+        if (!preg_match('/^[a-zA-Z\s]+$/', $nombre)) {
+            echo "Error: El nombre solo puede contener letras y espacios.";
+            exit;
+        }
+        
         // Procesar foto
         $foto = "";
         if (!empty($_FILES['foto']['name'])) {

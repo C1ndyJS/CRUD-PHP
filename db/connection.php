@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root"; // cambia si tienes otra config
-$pass = "";
+$pass = "toor";
 $dbname = "tecnolab";
 
 $conexion = new mysqli($host, $user, $pass, $dbname);
