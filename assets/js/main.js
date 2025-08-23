@@ -115,10 +115,22 @@ function editar(id) {
     $('#identificacion').val(data.identificacion);
     $('#telefono').val(data.telefono);
     $('#email').val(data.email);
+    
     $('#formTitulo').text("Actualizar Estudiante");
-    $('#btnSubmit').text("Registrar").removeClass("btn-success").addClass("btn-primary");
+    $('#btnSubmit').text("Actualizar").removeClass("btn-primary").addClass("btn-success");
     $('#btnCancel').removeClass("d-none");
-
+    editMode = true;
   });
 }
 
+
+$('#foto').on('change', function () {
+  let file = this.files[0];
+  if (file) {
+    let maxSize = 2 * 1024 * 1024; // 2MB
+    if (file.size > maxSize) {
+      alert("⚠️ La foto no puede superar los 2MB.");
+      $(this).val(''); // limpia el input
+    }
+  }
+});

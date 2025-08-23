@@ -48,6 +48,11 @@ switch ($action) {
         // Procesar foto
         $foto = "";
         if (!empty($_FILES['foto']['name'])) {
+            $maxSize = 2 * 1024 * 1024; // 2MB
+            if ($_FILES['foto']['size'] > $maxSize) {
+                echo "La foto supera el límite de 2MB.";
+                exit;
+            }
             $foto = time() . "_" . basename($_FILES['foto']['name']);
             $rutaDestino = "../assets/img/estudiantes/" . $foto;
             move_uploaded_file($_FILES['foto']['tmp_name'], $rutaDestino);
