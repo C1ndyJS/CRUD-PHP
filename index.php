@@ -45,6 +45,15 @@
               <label for="foto" class="form-label">Foto</label>
               <input type="file" id="foto" class="form-control" name="foto">
             </div>
+            
+            <div class="mb-3">
+              <label for="cursos" class="form-label">Cursos</label>
+              <select id="cursos" name="cursos[]" class="form-select" multiple>
+                <!-- Se llenará dinámicamente con AJAX -->
+              </select>
+              <small class="text-muted">Mantén presionada la tecla Ctrl (Windows) o Cmd (Mac) para seleccionar varios.</small>
+            </div>
+
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
               <button type="submit" id="btnSubmit" class="btn btn-primary me-2" name="btnregistrar" value="okay">Registrar</button>
               <button type="button" id="btnCancel" class="btn btn-secondary d-none">Cancelar</button>
@@ -68,7 +77,26 @@
                     </tr>
                   </thead>
               </table>
+              <div id="msg"></div>
             </div>
+
+            <h3 class="text-center text-secondary mb-3">Resgistro de Cursos</h3>
+              <form id="formCurso" method="POST" class="mb-4" enctype="multipart/form-data">
+                <input type="text" name="nombre" id="id" placeholder="Nombre del curso" required>
+                <input type="text" name="descripcion" id="cDescripcion" placeholder="Descripción">
+                <input type="text" name="codigo" id="cCodigo" placeholder="Código" required>
+                <button type="submit" class="btn btn-primary">Registrar curso</button>
+              </form>
+              <table id="tablaCursos" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Código</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+              </table>
           </div>
     </div>
   </div>

@@ -1,36 +1,65 @@
 let editMode = false; // false = registrar, true = editar
 let tabla; // hacemos global la referencia a DataTable
+let tablaCursos;
 
-//Read
+//================ Tabla de cursos ================
 $(document).ready(function () {
-  tabla = $('#tablaEstudiantes').DataTable({
-    ajax: "controllers/studentControllers.php?action=read",
+  tablaCursos = $('#tablaCursos').DataTable({
+    ajax: "controllers/courseController.php?action=read",
     columns: [
       { data: "nombre" },
-      { data: "identificacion" },
-      { data: "telefono" },
-      { data: "email" },
-      {
-        data: "foto",
-        render: function (data) {
-          return data ? `<img src="assets/img/estudiantes/${data}" width="50">` : '';
-        }
-      },
+      { data: "descripcion" },
+      { data: "codigo" },
       {
         data: "id",
         render: function (id) {
           return `
-            <button class="btn btn-warning btn-sm" onclick="editar(${id})">Editar</button>
-            <button class="btn btn-danger btn-sm" onclick="eliminar(${id})">Eliminar</button>
+            <button class="btn btn-danger btn-sm" onclick="eliminarCurso(${id})">Eliminar</button>
           `;
         }
       }
-    ],
-    dom: 'Bfrtip',
-    buttons: ['excel']
+    ]
   });
 });
 
+// Crear curso
+$('#formCurso').on('submit', function (e) {
+  e.preventDefault();
+  $.post("controllers/courseController.php?action=create", $(this).serialize(), function (resp) {
+    alert(resp);
+    $('#formCurso')[0].reset();
+    tablaCursos.ajax.reload();
+  });
+});
+
+// Eliminar curso
+function eliminarCurso(id) {
+  if (confirm("¿Eliminar este curso?")) {
+    $.post("controllers/courseController.php?action=delete", { id: id }, function (resp) {
+      alert(resp);
+      tablaCursos.ajax.reload();
+    });
+  }
+}
+
+// Llenar select de cursos al cargar la página
+function cargarCursos() {
+  $.getJSON("controllers/courseController.php?action=read", function(data) {
+    let $select = $("#cursos");
+    $select.empty();
+    data.data.forEach(curso => {
+      $select.append(`<option value="${curso.id}">${curso.nombre}</option>`);
+    });
+  });
+}
+
+$(document).ready(function () {
+  cargarCursos(); // 👈 carga cursos al iniciar
+});
+
+
+
+//================ ESTUDIANTES ================
 //Create
 $('#formRegistro').on('submit', function (e) {
     e.preventDefault();
@@ -88,6 +117,37 @@ $('#formRegistro').on('submit', function (e) {
     });
 });
 
+//Read
+$(document).ready(function () {
+  tabla = $('#tablaEstudiantes').DataTable({
+    ajax: "controllers/studentControllers.php?action=read",
+    columns: [
+      { data: "nombre" },
+      { data: "identificacion" },
+      { data: "telefono" },
+      { data: "email" },
+      {
+        data: "foto",
+        render: function (data) {
+          return data ? `<img src="assets/img/estudiantes/${data}" width="50">` : '';
+        }
+      },
+      {
+        data: "id",
+        render: function (id) {
+          return `
+            <button class="btn btn-warning btn-sm" onclick="editar(${id})">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="eliminar(${id})">Eliminar</button>
+          `;
+        }
+      }
+    ],
+    dom: 'Bfrtip',
+    buttons: ['excel']
+  });
+});
+
+// Cancelar edición
 $('#btnCancel').on('click', function () {
   $('#formRegistro')[0].reset();   // limpiar form
   $('#id').val('');
@@ -97,6 +157,7 @@ $('#btnCancel').on('click', function () {
   editMode = false;
 });
 
+// Eliminar estudiante
 function eliminar(id) {
   if (confirm("¿Seguro de eliminar este estudiante?")) {
     $.post("controllers/studentControllers.php?action=delete", { id: id }, function (resp) {
